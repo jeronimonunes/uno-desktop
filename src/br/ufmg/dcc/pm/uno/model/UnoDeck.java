@@ -15,7 +15,7 @@ import br.ufmg.dcc.pm.uno.model.EspecialCard.EspecialEffect;
  */
 public class UnoDeck implements Deck {
 
-	List<Card> cards = new LinkedList<Card>();
+	private List<Card> cards = new LinkedList<Card>();
 
 	@Override
 	public void initialize() {
@@ -61,8 +61,8 @@ public class UnoDeck implements Deck {
 		}
 		
 		for (int i=0;i<4;i++){
-			cards.add(new EspecialCard(Type.NONE,EspecialEffect.CHANGECOLOR));
-			cards.add(new EspecialCard(Type.NONE,EspecialEffect.PLUS4));
+			cards.add(new EspecialCard(Type.RED,EspecialEffect.CHANGECOLOR));
+			cards.add(new EspecialCard(Type.RED,EspecialEffect.PLUS4));
 		}
 
 	}
@@ -80,13 +80,16 @@ public class UnoDeck implements Deck {
 
 	@Override
 	public Card draw() {
+		//System.out.println("REMOVEU DA LISTA");
 		return cards.remove(0);
 	}
 
-	@Override
-	public void deal(int numberOfPlayers) {
-		// TODO Auto-generated method stub
-		// TALVEZ NÃO AQUI
+	public List<Card> getCards() {
+		return cards;
+	}
+
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
 	}
 
 }

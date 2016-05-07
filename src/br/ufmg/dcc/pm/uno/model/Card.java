@@ -13,6 +13,8 @@ public abstract class Card {
 	private int number = 0;
 	private Type color = Type.NONE;
 	
+	public abstract void printCard();
+	
 	public Card(int number,Type color){
 		this.number = number;
 		this.color = color;

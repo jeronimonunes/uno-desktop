@@ -11,7 +11,7 @@ public class Table {
 	
 	private Stack<Card> playedCards;
 	private Player[] players;
-	private Deck cardDeck;
+	private UnoDeck cardDeck;
 	
 	private boolean spinningDirection;
 	//true clockwise, false inverted
@@ -20,6 +20,11 @@ public class Table {
 		
 		this.playedCards = new Stack<Card>();
 		this.players = new Player[numberOfPlayers];
+			
+		for(int i=0; i<numberOfPlayers;i++){
+				players[i] = new Player();
+			}
+		
 		
 			for(int i=0; i<numberOfHumans;i++){
 				players[i].setHuman(true);
@@ -27,6 +32,8 @@ public class Table {
 		
 		this.cardDeck = new UnoDeck();
 		this.spinningDirection = true;
+		//VIRAR PRIMEIRA CARTA
+		playedCards.push(cardDeck.getCards().remove(0));
 	}
 
 	public Stack<Card> getPlayedCards() {
@@ -48,11 +55,11 @@ public class Table {
 		this.players = players;
 	}
 
-	public Deck getCardDeck() {
+	public UnoDeck getCardDeck() {
 		return cardDeck;
 	}
 
-	public void setCardDeck(Deck cardDeck) {
+	public void setCardDeck(UnoDeck cardDeck) {
 		this.cardDeck = cardDeck;
 	}
 

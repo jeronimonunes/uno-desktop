@@ -20,4 +20,10 @@ public class EspecialCard extends Card{
 		return effect;
 	}
 
+	@Override
+	public void printCard() {
+		System.out.println(((EspecialCard) this).getEffect().toString()+" "+this.getColor());
+		
+	}
+
 }
