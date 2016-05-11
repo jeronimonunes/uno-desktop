@@ -36,11 +36,11 @@ public class MouseCardEventListener implements EventHandler<MouseEvent>{
 		} else if(event.getEventType().equals(MouseEvent.MOUSE_CLICKED)){
 			animation = null;
 			//TODO Call event on game
-			controller.getPlayerCards().getChildren().remove(card);
+			controller.getPlayers().get(0).getChildren().remove(card);
 			
-			int size = controller.getPlayerCards().getChildren().size();
-			if(size<2) controller.getPlayerCards().setHgap(0);
-			else controller.getPlayerCards().setHgap((controller.getWidth()-300-size*97)/(size-1));
+			int size = controller.getPlayers().get(0).getChildren().size();
+			if(size<2) controller.getPlayers().get(0).setHgap(0);
+			else controller.getPlayers().get(0).setHgap((controller.getWidth()-300-size*97)/(size-1));
 			
 			card.setOnMouseEntered(null);
 			card.setOnMouseExited(null);

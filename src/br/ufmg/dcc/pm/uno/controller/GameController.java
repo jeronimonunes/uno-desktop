@@ -1,6 +1,7 @@
 package br.ufmg.dcc.pm.uno.controller;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -20,39 +21,23 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 
-public class GameController implements Initializable {
+public class GameController implements Initializable,GameClient {
 
 	private static final Random RANDOM_GENERATOR = new Random();
-	
-	@FXML
-	private BorderPane page;
-	
-	@FXML
-	private StackPane stack;
 
-	@FXML
-	private StackPane deck;
+	@FXML private BorderPane page;
+	@FXML private StackPane stack;
+	@FXML private StackPane deck;
+	@FXML private List<FlowPane> players;
 
-	@FXML
-	private FlowPane playerCards;
-	
-	@FXML
-	private FlowPane cpu0cards;
-	
-	@FXML
-	private FlowPane cpu1cards;
-	
-	@FXML
-	private FlowPane cpu2cards;
-	
 	private double width;
-	
 	private double height;
-	
+
 	private DoubleProperty widthProperty;
-	
 	private DoubleProperty heightProperty;
-	
+
+	private boolean userTurn;
+
 	public GameController() {
 		try {
 			widthProperty = new JavaBeanDoublePropertyBuilder().bean(this).name("width").build();
@@ -66,10 +51,10 @@ public class GameController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		widthProperty.bind(page.widthProperty());
 		heightProperty.bind(page.heightProperty());
-		cpu0cards.maxWidthProperty().bind(page.heightProperty().subtract(300));
-		cpu2cards.maxWidthProperty().bind(page.heightProperty().subtract(300));
-		cpu0cards.minWidthProperty().bind(page.heightProperty().subtract(300));
-		cpu2cards.minWidthProperty().bind(page.heightProperty().subtract(300));
+		for(int i = 1; i < getPlayers().size(); i+=2){
+			players.get(i).maxWidthProperty().bind(page.heightProperty().subtract(300));
+			players.get(i).minWidthProperty().bind(page.heightProperty().subtract(300));
+		}
 		for(int i = 0; i<5; i++){
 			Group card = GraphicCardFactory.getInstance().buildGrahics(Card.Color.NONE,0);
 			deck.getChildren().add(card);
@@ -78,19 +63,18 @@ public class GameController implements Initializable {
 		}
 		UnoDeck deck = new UnoDeck();
 		for(int i = 20; i<30; i++){
-			addPlayerCard(deck.getCards().get(i));
-			addCpu0Card(deck.getCards().get(i));
-			addCpu1Card(deck.getCards().get(i));
-			addCpu2Card(deck.getCards().get(i));
+			for(int j = 0; j<4; j++){
+				userBuysCard(j, deck.getCards().get(i));
+			}
 		}
 	}
 
 	public void deckClicked(MouseEvent event){
 		//TODO Call event on game
-		new Thread(new PickingCardAnimation(cpu0cards)).start();
-		UnoDeck deck = new UnoDeck();
-		int i = RANDOM_GENERATOR.nextInt(deck.getCards().size());
-		addPlayerCard(deck.getCards().get(i));
+		
+//		UnoDeck deck = new UnoDeck();
+//		int i = RANDOM_GENERATOR.nextInt(deck.getCards().size());
+//		addPlayerCard(deck.getCards().get(i));
 	}
 
 	public void addCardToStack(Card card){
@@ -105,46 +89,64 @@ public class GameController implements Initializable {
 		stack.getChildren().add(card);
 	}
 
-	public void addPlayerCard(Card c){
+	@Override
+	public void changeTurn(int i) {
+		if(i==0){
+			userTurn = true;
+		} else {
+			userTurn = false;
+			new Thread(new PickingCardAnimation(getPlayers().get(i))).start();
+		}
+	}
+
+	@Override
+	public void userBuysCard(int i, Card c) {
+		FlowPane ui = getPlayers().get(i);
 		final Group card = GraphicCardFactory.getInstance().buildGrahics(c);
 		card.setTranslateY(72);
-		playerCards.getChildren().add(card);
-		int size = playerCards.getChildren().size();
-		if(size<2) playerCards.setHgap(0);
-		else playerCards.setHgap((getWidth()-300-size*97)/(size-1));
-		EventHandler<MouseEvent> event = new MouseCardEventListener(this,card);
-		card.setOnMouseEntered(event);
-		card.setOnMouseExited(event);
-		card.setOnMouseClicked(event);
+		ui.getChildren().add(card);
+		updateHandWidth(ui,i%2==0?getWidth():getHeight());
+		if(i==0){
+			EventHandler<MouseEvent> mouseEvent = new MouseCardEventListener(this,card);
+			card.setOnMouseEntered(mouseEvent);
+			card.setOnMouseExited(mouseEvent);
+			card.setOnMouseClicked(mouseEvent);
+		}
+	}
+
+	@Override
+	public void cleanStack() {
+		getStack().getChildren().clear();
+	}
+
+	public double getWidth() {
+		return width;
+	}
+
+	public void setWidth(double width) {
+		this.width = width;
+		for(int i = 0; i<getPlayers().size(); i+=2){
+			updateHandWidth(getPlayers().get(i),height);
+		}
+	}
+
+	public double getHeight() {
+		return height;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
+		for(int i = 1; i<getPlayers().size(); i+=2){
+			updateHandWidth(getPlayers().get(i),height);
+		}
 	}
 	
-	public void addCpu0Card(Card c){
-		final Group card = GraphicCardFactory.getInstance().buildGrahics(Card.Color.NONE,0);
-		card.setTranslateY(72);
-		cpu0cards.getChildren().add(card);
-		int size = cpu0cards.getChildren().size();
-		if(size<2) cpu0cards.setHgap(0);
-		else cpu0cards.setHgap((getHeight()-300-size*97)/(size-1));
+	private static void updateHandWidth(FlowPane pane, double maxSize){
+		int size = pane.getChildren().size();
+		if(size<2) pane.setHgap(0);
+		else pane.setHgap((maxSize-305-size*97)/(size-1));
 	}
-	
-	public void addCpu1Card(Card c){
-		final Group card = GraphicCardFactory.getInstance().buildGrahics(Card.Color.NONE,0);
-		card.setTranslateY(72);
-		cpu1cards.getChildren().add(card);
-		int size = cpu1cards.getChildren().size();
-		if(size<2) cpu1cards.setHgap(0);
-		else cpu1cards.setHgap((getWidth()-300-size*97)/(size-1));
-	}
-	
-	public void addCpu2Card(Card c){
-		final Group card = GraphicCardFactory.getInstance().buildGrahics(Card.Color.NONE,0);
-		card.setTranslateY(72);
-		cpu2cards.getChildren().add(card);
-		int size = cpu2cards.getChildren().size();
-		if(size<2) cpu2cards.setHgap(0);
-		else cpu2cards.setHgap((getHeight()-size*97)/(size-1));
-	}
-	
+
 	public StackPane getStack() {
 		return stack;
 	}
@@ -161,38 +163,6 @@ public class GameController implements Initializable {
 		this.deck = deck;
 	}
 
-	public FlowPane getPlayerCards() {
-		return playerCards;
-	}
-
-	public void setPlayerCards(FlowPane playerCards) {
-		this.playerCards = playerCards;
-	}
-
-	public FlowPane getCpu0cards() {
-		return cpu0cards;
-	}
-
-	public void setCpu0cards(FlowPane cpu0cards) {
-		this.cpu0cards = cpu0cards;
-	}
-
-	public FlowPane getCpu1cards() {
-		return cpu1cards;
-	}
-
-	public void setCpu1cards(FlowPane cpu1cards) {
-		this.cpu1cards = cpu1cards;
-	}
-
-	public FlowPane getCpu2cards() {
-		return cpu2cards;
-	}
-
-	public void setCpu2cards(FlowPane cpu2cards) {
-		this.cpu2cards = cpu2cards;
-	}
-
 	public BorderPane getPage() {
 		return page;
 	}
@@ -201,32 +171,20 @@ public class GameController implements Initializable {
 		this.page = page;
 	}
 
-	public double getWidth() {
-		return width;
+	public boolean isUserTurn() {
+		return userTurn;
 	}
 
-	public void setWidth(double width) {
-		int size = playerCards.getChildren().size();
-		if(size<2) playerCards.setHgap(0);
-		else playerCards.setHgap((width-300-size*97)/(size-1));
-		size = cpu1cards.getChildren().size();
-		if(size<2) cpu1cards.setHgap(0);
-		else cpu1cards.setHgap((width-300-size*97)/(size-1));
-		this.width = width;
+	public void setUserTurn(boolean userTurn) {
+		this.userTurn = userTurn;
 	}
 
-	public double getHeight() {
-		return height;
+	public List<FlowPane> getPlayers() {
+		return players;
 	}
 
-	public void setHeight(double height) {
-		int size = cpu2cards.getChildren().size();
-		if(size<2) cpu2cards.setHgap(0);
-		else cpu2cards.setHgap((height-305-size*97)/(size-1));
-		size = cpu0cards.getChildren().size();
-		if(size<2) cpu0cards.setHgap(0);
-		else cpu0cards.setHgap((height-305-size*97)/(size-1));
-		this.height = height;
+	public void setPlayers(List<FlowPane> players) {
+		this.players = players;
 	}
 
 }

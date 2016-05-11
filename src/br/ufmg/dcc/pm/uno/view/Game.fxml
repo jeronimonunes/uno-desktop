@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.image.ImageView?>
 <?import java.net.URL?>
+<?import java.util.ArrayList?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.Group?>
 
@@ -15,31 +16,38 @@
 	<stylesheets>
 		<URL value="@Game.css"/>
 	</stylesheets>
-	<left>
-		<Group translateX="-72">
-			<FlowPane fx:id="cpu0cards" rotate="90" maxHeight="144"/>
-		</Group>
-	</left>
-	<top>
-		<FlowPane fx:id="cpu1cards" rotate="180" alignment="center"/>
-	</top>
-	<right>
-		<Group translateX="72">
-			<FlowPane fx:id="cpu2cards" rotate="270" maxHeight="144"/>
-		</Group>
-	</right>
-	<center>
-		<StackPane fx:id="stack"/>
-	</center>
 	<bottom>
 		<BorderPane>
 			<center>
-				<FlowPane fx:id="playerCards" alignment="center"/>
+				<FlowPane fx:id="player0" alignment="center"/>
 			</center>
 			<right>
 				<StackPane fx:id="deck" translateX="-10" translateY="-10" onMouseClicked="#deckClicked"/>
 			</right>
 		</BorderPane>
 	</bottom>
+	<left>
+		<Group translateX="-72">
+			<FlowPane fx:id="player1" rotate="90" maxHeight="144"/>
+		</Group>
+	</left>
+	<top>
+		<FlowPane fx:id="player2" rotate="180" alignment="center"/>
+	</top>
+	<right>
+		<Group translateX="72">
+			<FlowPane fx:id="player3" rotate="270" maxHeight="144"/>
+		</Group>
+	</right>
+	<center>
+		<StackPane fx:id="stack"/>
+	</center>
+	<fx:define>
+	    <ArrayList fx:id="players">
+	        <fx:reference source="player0" />
+	        <fx:reference source="player1" />
+	        <fx:reference source="player2" />
+	        <fx:reference source="player3" /> 
+	    </ArrayList>
+	</fx:define>
 </BorderPane>
-
