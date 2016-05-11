@@ -7,7 +7,7 @@ public class EspecialCard extends Card{
 	
 	private EspecialEffect effect;
 	
-	public EspecialCard (Type color,EspecialEffect effect){
+	public EspecialCard (Color color,EspecialEffect effect){
 		super(color);
 		this.effect = effect;
 	}

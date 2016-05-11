@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.image.ImageView?>
+<?import java.net.URL?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.Group?>
+
+<BorderPane fx:id="page" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="br.ufmg.dcc.pm.uno.controller.GameController">
+	<stylesheets>
+		<URL value="@Game.css"/>
+	</stylesheets>
+	<left>
+		<Group translateX="-72">
+			<FlowPane fx:id="cpu0cards" rotate="90" maxHeight="144"/>
+		</Group>
+	</left>
+	<top>
+		<FlowPane fx:id="cpu1cards" rotate="180" alignment="center"/>
+	</top>
+	<right>
+		<Group translateX="72">
+			<FlowPane fx:id="cpu2cards" rotate="270" maxHeight="144"/>
+		</Group>
+	</right>
+	<center>
+		<StackPane fx:id="stack"/>
+	</center>
+	<bottom>
+		<BorderPane>
+			<center>
+				<FlowPane fx:id="playerCards" alignment="center"/>
+			</center>
+			<right>
+				<StackPane fx:id="deck" translateX="-10" translateY="-10" onMouseClicked="#deckClicked"/>
+			</right>
+		</BorderPane>
+	</bottom>
+</BorderPane>
+

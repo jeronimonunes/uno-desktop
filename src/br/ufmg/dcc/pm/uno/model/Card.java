@@ -6,21 +6,21 @@ package br.ufmg.dcc.pm.uno.model;
  *
  */
 public abstract class Card {
-	public enum Type {
+	public enum Color {
 		RED,YELLOW,BLUE,GREEN,NONE
 	}
 	
 	private int number = 0;
-	private Type color = Type.NONE;
+	private Color color = Color.NONE;
 	
 	public abstract void printCard();
 	
-	public Card(int number,Type color){
+	public Card(int number,Color color){
 		this.number = number;
 		this.color = color;
 	}
 	
-	public Card(Type color){
+	public Card(Color color){
 		this.color = color;
 	}
 	
@@ -32,11 +32,11 @@ public abstract class Card {
 		return number;
 	}
 	
-	public void setColor(Type color) {
+	public void setColor(Color color) {
 		this.color = color;
 	}
 	
-	public Type getColor() {
+	public Color getColor() {
 		return color;
 	}
 	

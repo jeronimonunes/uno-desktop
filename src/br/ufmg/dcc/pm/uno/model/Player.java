@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import br.ufmg.dcc.pm.uno.model.Card.Type;
+import br.ufmg.dcc.pm.uno.model.Card.Color;
 import br.ufmg.dcc.pm.uno.model.EspecialCard.EspecialEffect;
 
 /**
@@ -48,16 +48,16 @@ public class Player {
 					
 					switch (new Random().nextInt() % 4) {
 					case 0:
-						hand.get(0).setColor(Type.RED);
+						hand.get(0).setColor(Color.RED);
 						break;
 					case 1:
-						hand.get(0).setColor(Type.BLUE);
+						hand.get(0).setColor(Color.BLUE);
 						break;
 					case 2:
-						hand.get(0).setColor(Type.GREEN);
+						hand.get(0).setColor(Color.GREEN);
 						break;
 					case 3:
-						hand.get(0).setColor(Type.BLUE);
+						hand.get(0).setColor(Color.BLUE);
 						break;
 					}
 				}
@@ -126,16 +126,16 @@ public class Player {
 
 							switch (new Random().nextInt() % 4) {
 							case 0:
-								chosenCard.setColor(Type.RED);
+								chosenCard.setColor(Color.RED);
 								break;
 							case 1:
-								chosenCard.setColor(Type.BLUE);
+								chosenCard.setColor(Color.BLUE);
 								break;
 							case 2:
-								chosenCard.setColor(Type.GREEN);
+								chosenCard.setColor(Color.GREEN);
 								break;
 							case 3:
-								chosenCard.setColor(Type.BLUE);
+								chosenCard.setColor(Color.BLUE);
 								break;
 							}
 							// ESCOLHE ALEATORIAMENTE A COR, CAN BE IMPROVED

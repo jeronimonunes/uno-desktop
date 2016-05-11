@@ -1,7 +1,7 @@
 package br.ufmg.dcc.pm.uno.model;
 
 public class RegularCard extends Card {
-	public RegularCard(int number,Type color){
+	public RegularCard(int number,Color color){
 		super(number,color);
 	}
 
