@@ -1,20 +1,21 @@
 package br.ufmg.dcc.pm.uno.view;
 
 import br.ufmg.dcc.pm.uno.controller.GameController;
+import br.ufmg.dcc.pm.uno.model.Card;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
+import javafx.event.EventTarget;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
 public class MouseCardEventListener implements EventHandler<MouseEvent>{
-	
-	private Group card;
+
 	private GameController controller;
-	
+
 	private Animation<Node> animation;
 	private Thread animationThread;
+	private Card card;
 
-	public MouseCardEventListener(GameController controller,Group card) {
+	public MouseCardEventListener(GameController controller,Card card) {
 		this.card = card;
 		this.controller = controller;
 	}
@@ -30,27 +31,31 @@ public class MouseCardEventListener implements EventHandler<MouseEvent>{
 			}
 		}
 		if(event.getEventType().equals(MouseEvent.MOUSE_ENTERED)){
-			animation = new CardUpAnimation(card);
+			animation = new CardUpAnimation(findCardUI(event.getTarget()));
 		} else if(event.getEventType().equals(MouseEvent.MOUSE_EXITED)){
-			animation = new CardDownAnimation(card);
+			animation = new CardDownAnimation(findCardUI(event.getTarget()));
 		} else if(event.getEventType().equals(MouseEvent.MOUSE_CLICKED)){
-			animation = null;
-			//TODO Call event on game
-			controller.getPlayers().get(0).getChildren().remove(card);
-			
-			int size = controller.getPlayers().get(0).getChildren().size();
-			if(size<2) controller.getPlayers().get(0).setHgap(0);
-			else controller.getPlayers().get(0).setHgap((controller.getWidth()-300-size*97)/(size-1));
-			
-			card.setOnMouseEntered(null);
-			card.setOnMouseExited(null);
-			controller.addCardToStack(card);
+			if(controller.isUserTurn()){
+				if(controller.play(card)){
+					controller.getPlayers().get(0).getChildren().remove(findCardUI(event.getTarget()));
+					animation = null;
+					GameController.updateHandWidth(controller.getPlayers().get(0), controller.getWidth());
+				}
+			}
 		}
 		if(animation!=null){
 			animationThread = new Thread(animation);
 			animationThread.setDaemon(true);
 			animationThread.start();
 		}
+	}
+
+	private static Node findCardUI(EventTarget target){
+		Node g = (Node) target;
+		while(g!=null&&!"_root".equals(g.getId())){
+			g=g.getParent();
+		}
+		return g;
 	}
 
 }

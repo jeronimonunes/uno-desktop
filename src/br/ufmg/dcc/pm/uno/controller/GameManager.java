@@ -1,171 +1,153 @@
 package br.ufmg.dcc.pm.uno.controller;
 
 import java.util.Collections;
+import java.util.Random;
+import java.util.logging.Logger;
 
 import br.ufmg.dcc.pm.uno.model.Card;
-import br.ufmg.dcc.pm.uno.model.EspecialCard;
-import br.ufmg.dcc.pm.uno.model.RegularCard;
+import br.ufmg.dcc.pm.uno.model.Card.Color;
 import br.ufmg.dcc.pm.uno.model.Table;
 
-public class GameManager implements GameServer {
+/**
+ * The Uno Game implementation
+ * @author Alexandre Alphonsos Rodrigues Pereira
+ * @author Jerônimo Nunes Rocha
+ *
+ */
+public class GameManager implements Runnable {
 
-	private int numberOfPlayers = 10;
-	private int numberOfHumans = 0;
+	private final static Logger LOGGER = Logger.getLogger(GameManager.class.getName());
+	private static final Random RANDOM_GENERATOR = new Random();
+
 	private int currentPlayerTurn = 0;
 	private boolean gameOver = false;
-	private Table gameTable;
+	private Table table;
+	private GameClient client;
 
-	public void startGame() {
-		Card cardPlayed = null;
+	private Color color = Color.NONE;
 
-		gameTable = new Table(numberOfPlayers, numberOfHumans);
-		dealCards(numberOfPlayers);
+	public GameManager(GameClient client, int numberOfPlayers) {
+		table = new Table(this,numberOfPlayers);
+		this.client = client;
+	}
 
-		while (!gameOver) {
-			// EMBARALHA MAO DOS COMPUTADORES PARA NAO ENTRAR EM LOOP
-			// NAO APAGAR
-			Collections.shuffle(gameTable.getPlayer(currentPlayerTurn)
-					.getHand());
+	public void gameOver(){
+		gameOver = true;
+		int winner = 0;
+		for(int i = 1; i<table.getPlayers().length;i++){
+			if(table.getPlayer(i).getHand().size()<table.getPlayer(winner).getHand().size()){
+				winner = i;
+			}
+		}
+		LOGGER.info("Player "+winner+" won");
+		client.gameOver(winner);
+	}
 
-			// CHECA SE O BARALHO ACABOU E O REMONTA A PARTIR DA PILHA DA CARTAS
-			// JOGADAS
-			isCardDeckEmpty();
-
-			// PLAYER JOGANDO
-			cardPlayed = gameTable.getPlayer(currentPlayerTurn).playCard(
-					gameTable.getPlayedCards().peek(), gameTable.getCardDeck());
-
-			if (cardPlayed != null) {
-				// CONSEGUIU JOGAR UMA CARTA
-				gameTable.getPlayedCards().push(cardPlayed);
-
+	/**
+	 * The player defines the card only when it 
+	 * @param card
+	 * @param color
+	 * @return true if the play were valid
+	 */
+	public boolean play(Card card,Color color) {
+		if(card==null||color==null){
+			LOGGER.info("The player "+currentPlayerTurn+" has skipped his turn");
+			if(table.getCardDeck().isEmpty()) gameOver();
+			nextPlayer();
+			synchronized (this) {
+				this.notify();
+			}
+			return true;
+		} else {
+			if(card.isCompactible(this)){
+				LOGGER.info("The player "+currentPlayerTurn+" has played "+card+" "+color);
+				this.color = color;
+				client.addCardToStack(card);
 
 				// GANHANDO O JOGO
-				if (gameTable.getPlayer(currentPlayerTurn).getHand().isEmpty()
-						&& gameTable.getPlayer(currentPlayerTurn).isUnoStatus()) {
-					gameOver = true;
-					break;
+				if (table.getPlayer(currentPlayerTurn).getHand().isEmpty()) {
+					gameOver();
+				} else {
+					card.effect(this);
 				}
-
-				// RESOLVE EFEITO DA JOGADA E DECIDE PROXIMO JOGADOR
-				turnResolution();
+				synchronized (this) {
+					this.notify();					
+				}
+				return true;
 			} else {
-				// NAO JOGOU CARTA, PASSA VEZ
-				System.out.println("Jogador" + currentPlayerTurn + "comprou");
-				nextPlayer(gameTable.isSpinningDirection());
-
-			}
-
-		}
-		System.out.println("Jogador" + currentPlayerTurn + "Ganhou!");
-
-	}
-
-	private void isCardDeckEmpty() {
-		if (gameTable.getCardDeck().getCards().isEmpty()) {
-			if (gameTable.getPlayedCards().size() == 1)
-				System.out.println("ACABARAM AS CARTAS JOGADAS");
-			remountDeck();
-			System.out.println("ACABOU O BARALHO");
-		}
-	}
-
-	private void remountDeck() {
-		Card top;
-		top = gameTable.getPlayedCards().pop();
-		while (!gameTable.getPlayedCards().isEmpty()) {
-			gameTable.getCardDeck().getCards()
-			.add(gameTable.getPlayedCards().pop());
-		}
-		Collections.shuffle(gameTable.getCardDeck().getCards());
-		gameTable.getPlayedCards().push(top);
-
-	}
-
-	private void nextPlayer(boolean spinningDirection) {
-		if (spinningDirection){
-
-			currentPlayerTurn = ((currentPlayerTurn + 1) % numberOfPlayers);
-		}
-		else{
-			currentPlayerTurn = ((((currentPlayerTurn - 1) % numberOfPlayers) + numberOfPlayers) % numberOfPlayers);
-		}
-	}
-
-	private void turnResolution() {
-		System.out.println("Jogador" + currentPlayerTurn +
-				"jogou:");
-
-		if (gameTable.getPlayedCards().peek() instanceof RegularCard) {
-			nextPlayer(gameTable.isSpinningDirection());
-			gameTable.getPlayedCards().peek().printCard();
-
-		} else if (gameTable.getPlayedCards().peek() instanceof EspecialCard) {
-			switch (((EspecialCard) gameTable.getPlayedCards().peek())
-					.getEffect().toString()) {
-
-					case "CHANGECOLOR":
-						gameTable.getPlayedCards().peek().printCard();
-						nextPlayer(gameTable.isSpinningDirection());
-						break;
-					case "PLUS4":
-						gameTable.getPlayedCards().peek().printCard();
-
-						for (int i = 0; i < 4; i++) {
-							isCardDeckEmpty();
-							gameTable.getPlayer(
-									(currentPlayerTurn + 1) % numberOfPlayers)
-							.drawCard(gameTable.getCardDeck());
-						}
-						nextPlayer(gameTable.isSpinningDirection());
-						nextPlayer(gameTable.isSpinningDirection());
-						break;
-
-					case "REVERSE":
-						gameTable.getPlayedCards().peek().printCard();
-
-						gameTable
-						.setSpinningDirection(!gameTable.isSpinningDirection());
-						nextPlayer(gameTable.isSpinningDirection());
-						break;
-
-					case "SKIP":
-						gameTable.getPlayedCards().peek().printCard();
-
-						nextPlayer(gameTable.isSpinningDirection());
-						nextPlayer(gameTable.isSpinningDirection());
-						break;
-
-					case "PLUS2":
-						gameTable.getPlayedCards().peek().printCard();
-
-						for (int i = 0; i < 2; i++) {
-							isCardDeckEmpty();
-							gameTable.getPlayer(
-									(currentPlayerTurn + 1) % numberOfPlayers)
-							.drawCard(gameTable.getCardDeck());
-						}
-						nextPlayer(gameTable.isSpinningDirection());
-						nextPlayer(gameTable.isSpinningDirection());
-						break;
+				return false;
 			}
 		}
-
-
-
-		//REGULAR/ESPECIAL CARD
-		// CASE SWITCH DOS EFEITOS ESPECIAIS
-
 	}
 
-	private void dealCards(int numberOfPlayers) {
+	public Card drawCard(){
+		return drawCard(currentPlayerTurn);
+	}
 
-		for (int i = 0; i < numberOfPlayers; i++) {
+	private Card drawCard(int player){
+		if (getTable().getCardDeck().isEmpty()) {
+			if (getTable().getPlayedCards().size() == 1)
+				LOGGER.info("No more possible moves");
+			Card top;
+			top = getTable().getPlayedCards().pop();
+			while (!getTable().getPlayedCards().isEmpty()) {
+				getTable().getCardDeck().getCards()
+				.add(getTable().getPlayedCards().pop());
+			}
+			Collections.shuffle(getTable().getCardDeck().getCards());
+			getTable().getPlayedCards().push(top);
+			LOGGER.info("The deck is over");
+		}
+
+		Card card = getTable().getCardDeck().draw();
+		if(card!=null) {
+			getTable().getPlayer(player).getHand().add(0,card);
+			client.userBuysCard(player, card);
+		}
+		return card;
+	}
+
+	@Override
+	public void run() {
+		dealCards();
+		currentPlayerTurn = RANDOM_GENERATOR.nextInt(4);
+		for(Card c:'')
+		getTable().getPlayedCards().add(getTable().getCardDeck().draw());
+		client.addCardToStack(getTable().getPlayedCards().peek());
+		// VIRAR PRIMEIRA CARTA
+		playedCards.push(cardDeck.draw());
+		while(!gameOver){
+			client.changeTurn(currentPlayerTurn);
+			table.getPlayer(currentPlayerTurn).playCard();
+		}
+	}
+
+	public void nextPlayer() {
+		if (table.isSpinningDirection()){
+			currentPlayerTurn = ((currentPlayerTurn + 1) % getNumberOfPlayers());
+		} else {
+			currentPlayerTurn = ((((currentPlayerTurn - 1) % getNumberOfPlayers()) + getNumberOfPlayers()) % getNumberOfPlayers());
+		}
+	}
+
+	private void dealCards() {
+		for (int i = 0; i < getNumberOfPlayers(); i++) {
 			for (int j = 0; j < 7; j++) {
-				gameTable.getPlayer(i).drawCard(gameTable.getCardDeck());
-
+				drawCard(i);
 			}
 		}
+	}
+
+	public int getNumberOfPlayers(){
+		return table.getPlayers().length;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public Table getTable() {
+		return table;
 	}
 
 }

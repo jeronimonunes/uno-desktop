@@ -1,5 +1,7 @@
 package br.ufmg.dcc.pm.uno.controller;
 
+import br.ufmg.dcc.pm.uno.model.Card;
+
 /**
  * Interface that any {@link GameManager} must implement
  * @author Jerônimo Nunes Rocha
@@ -7,6 +9,8 @@ package br.ufmg.dcc.pm.uno.controller;
  */
 public interface GameServer {
 	
-//	public Card drawCard(int player);
+	public Card drawCard();
+	
+	public boolean play(Card card);
 	
 }

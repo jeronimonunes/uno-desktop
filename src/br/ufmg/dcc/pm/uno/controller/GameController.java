@@ -6,10 +6,11 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 import br.ufmg.dcc.pm.uno.model.Card;
-import br.ufmg.dcc.pm.uno.model.UnoDeck;
+import br.ufmg.dcc.pm.uno.model.Card.Color;
 import br.ufmg.dcc.pm.uno.view.MouseCardEventListener;
 import br.ufmg.dcc.pm.uno.view.PickingCardAnimation;
 import br.ufmg.dcc.pm.uno.view.cards.GraphicCardFactory;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.adapter.JavaBeanDoublePropertyBuilder;
 import javafx.event.EventHandler;
@@ -21,6 +22,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 
+/**
+ * Java FX Controller for Game
+ * @author Alexandre Alphonsos Rodrigues Pereira
+ * @author Jerônimo Nunes Rocha
+ */
 public class GameController implements Initializable,GameClient {
 
 	private static final Random RANDOM_GENERATOR = new Random();
@@ -36,13 +42,16 @@ public class GameController implements Initializable,GameClient {
 	private DoubleProperty widthProperty;
 	private DoubleProperty heightProperty;
 
-	private boolean userTurn;
+	private boolean userTurn = true;
+
+	private GameManager game;
 
 	public GameController() {
 		try {
 			widthProperty = new JavaBeanDoublePropertyBuilder().bean(this).name("width").build();
 			heightProperty = new JavaBeanDoublePropertyBuilder().bean(this).name("height").build();
-		} catch (NoSuchMethodException e) {
+			this.game = new GameManager(this, 4);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -61,32 +70,31 @@ public class GameController implements Initializable,GameClient {
 			card.setTranslateX(i*2);
 			card.setTranslateY(5 - i*2);
 		}
-		UnoDeck deck = new UnoDeck();
-		for(int i = 20; i<30; i++){
-			for(int j = 0; j<4; j++){
-				userBuysCard(j, deck.getCards().get(i));
-			}
-		}
+		Thread t = new Thread(game);
+		t.setDaemon(true);
+		t.start();
 	}
 
 	public void deckClicked(MouseEvent event){
-		//TODO Call event on game
-		
-//		UnoDeck deck = new UnoDeck();
-//		int i = RANDOM_GENERATOR.nextInt(deck.getCards().size());
-//		addPlayerCard(deck.getCards().get(i));
+		game.drawCard();
 	}
 
+	@Override
 	public void addCardToStack(Card card){
 		addCardToStack(GraphicCardFactory.getInstance().buildGrahics(card));
 	}
 
-	public void addCardToStack(Group card){
-		card.translateXProperty().unbind();
-		card.setTranslateX(RANDOM_GENERATOR.nextInt(96)-48);
-		card.translateYProperty().unbind();
-		card.setTranslateY(RANDOM_GENERATOR.nextInt(144)-72);
-		stack.getChildren().add(card);
+	private void addCardToStack(final Group card){
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				card.translateXProperty().unbind();
+				card.setTranslateX(RANDOM_GENERATOR.nextInt(96)-48);
+				card.translateYProperty().unbind();
+				card.setTranslateY(RANDOM_GENERATOR.nextInt(144)-72);
+				stack.getChildren().add(card);
+			}
+		});
 	}
 
 	@Override
@@ -95,28 +103,39 @@ public class GameController implements Initializable,GameClient {
 			userTurn = true;
 		} else {
 			userTurn = false;
-			new Thread(new PickingCardAnimation(getPlayers().get(i))).start();
+			new PickingCardAnimation(getPlayers().get(i)).perform();
 		}
 	}
 
 	@Override
-	public void userBuysCard(int i, Card c) {
-		FlowPane ui = getPlayers().get(i);
-		final Group card = GraphicCardFactory.getInstance().buildGrahics(c);
-		card.setTranslateY(72);
-		ui.getChildren().add(card);
-		updateHandWidth(ui,i%2==0?getWidth():getHeight());
-		if(i==0){
-			EventHandler<MouseEvent> mouseEvent = new MouseCardEventListener(this,card);
-			card.setOnMouseEntered(mouseEvent);
-			card.setOnMouseExited(mouseEvent);
-			card.setOnMouseClicked(mouseEvent);
-		}
+	public void userBuysCard(final int i, final Card c) {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				FlowPane ui = getPlayers().get(i);
+				final Group card = GraphicCardFactory.getInstance().buildGrahics(c);
+				card.setTranslateY(72);
+				ui.getChildren().add(card);
+				updateHandWidth(ui,i%2==0?getWidth():getHeight());
+				if(i==0){
+					EventHandler<MouseEvent> mouseEvent = new MouseCardEventListener(GameController.this,c);
+					card.setOnMouseEntered(mouseEvent);
+					card.setOnMouseExited(mouseEvent);
+					card.setOnMouseClicked(mouseEvent);
+				}
+			}
+		});
 	}
 
 	@Override
 	public void cleanStack() {
 		getStack().getChildren().clear();
+	}
+
+	@Override
+	public void gameOver(int win) {
+		// TODO Auto-generated method stub
+
 	}
 
 	public double getWidth() {
@@ -140,11 +159,19 @@ public class GameController implements Initializable,GameClient {
 			updateHandWidth(getPlayers().get(i),height);
 		}
 	}
-	
-	private static void updateHandWidth(FlowPane pane, double maxSize){
+
+	public static void updateHandWidth(FlowPane pane, double maxSize){
 		int size = pane.getChildren().size();
 		if(size<2) pane.setHgap(0);
 		else pane.setHgap((maxSize-305-size*97)/(size-1));
+	}
+
+	public boolean play(Card card) {
+		Color color = card.getColor();
+		if(Color.NONE.equals(color)){
+			color = Color.values()[RANDOM_GENERATOR.nextInt(4)];
+		}
+		return game.play(card,card.getColor());
 	}
 
 	public StackPane getStack() {

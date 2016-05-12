@@ -8,6 +8,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+/**
+ * Uno Desktop {@link Application} Game
+ * @author Alexandre Alphonsos Rodrigues Pereira
+ * @author Jerônimo Nunes Rocha
+ *
+ */
 public class UnoDesktop extends Application {
 
 	@Override

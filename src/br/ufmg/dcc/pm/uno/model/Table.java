@@ -2,6 +2,8 @@ package br.ufmg.dcc.pm.uno.model;
 
 import java.util.Stack;
 
+import br.ufmg.dcc.pm.uno.controller.GameManager;
+
 /**
  * Class that represents a UNO Table
  * 
@@ -15,25 +17,22 @@ public class Table {
 	private UnoDeck cardDeck;
 
 	private boolean spinningDirection;
+	private GameManager game;
 	// true clockwise, false inverted
+	
+	public Table(GameManager game, int numberOfPlayers) {
 
-	public Table(int numberOfPlayers, int numberOfHumans) {
-
+		this.game = game;
 		this.playedCards = new Stack<Card>();
 		this.players = new Player[numberOfPlayers];
 
-		for (int i = 0; i < numberOfPlayers; i++) {
-			players[i] = new Player();
-		}
-
-		for (int i = 0; i < numberOfHumans; i++) {
-			players[i].setHuman(true);
+		players[0] = new ClientPlayer(game);
+		for (int i = 1; i < numberOfPlayers; i++) {
+			players[i] = new ArtificialPlayer(game);
 		}
 
 		this.cardDeck = new UnoDeck();
 		this.spinningDirection = true;
-		// VIRAR PRIMEIRA CARTA
-		playedCards.push(cardDeck.getCards().remove(0));
 	}
 
 	public Stack<Card> getPlayedCards() {
@@ -70,6 +69,10 @@ public class Table {
 
 	public void setSpinningDirection(boolean spinningDirection) {
 		this.spinningDirection = spinningDirection;
+	}
+	
+	public GameManager getGame() {
+		return game;
 	}
 
 }
