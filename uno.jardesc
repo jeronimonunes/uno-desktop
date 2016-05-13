@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="uno-desktop/uno-desktop.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/uno-desktop/uno.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" mainClassHandleIdentifier="=uno-desktop/src&lt;br.ufmg.dcc.pm.uno{UnoDesktop.java[UnoDesktop" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <folder path="/uno-desktop/lib"/>
+        <javaElement handleIdentifier="=uno-desktop/src"/>
+        <file path="/uno-desktop/.gitignore"/>
+        <file path="/uno-desktop/.classpath"/>
+        <file path="/uno-desktop/.project"/>
+        <file path="/uno-desktop/new-fxml-settings.xml"/>
+    </selectedElements>
+</jardesc>
