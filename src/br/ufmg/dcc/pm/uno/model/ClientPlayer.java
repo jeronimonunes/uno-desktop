@@ -7,7 +7,7 @@ import br.ufmg.dcc.pm.uno.game.UnoGame;
  * A player that {@link Object#wait()} on it's turn for some {@link GameUserInterface} to make the
  * play for theirself and call {@link Object#notify()} on the game
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  */
 public class ClientPlayer extends Player {

@@ -7,7 +7,7 @@ import br.ufmg.dcc.pm.uno.game.Game;
 /**
  * Class that represents a Card
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  */
 public class Card {

@@ -11,7 +11,7 @@ import br.ufmg.dcc.pm.uno.model.Table;
 /**
  * The Uno Game implementation
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  */
 public class UnoGame implements Game {

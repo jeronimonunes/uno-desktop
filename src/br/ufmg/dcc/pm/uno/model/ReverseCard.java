@@ -5,7 +5,7 @@ import br.ufmg.dcc.pm.uno.game.Game;
 /**
  * A card with the effect of reverting the game rotation
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  */
 public class ReverseCard extends Card {

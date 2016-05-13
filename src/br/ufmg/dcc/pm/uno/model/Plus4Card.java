@@ -5,7 +5,7 @@ import br.ufmg.dcc.pm.uno.game.Game;
 /**
  * A {@link Card} with the effect of adding 4 cards to the hand of the next user
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  */
 public class Plus4Card extends Card {

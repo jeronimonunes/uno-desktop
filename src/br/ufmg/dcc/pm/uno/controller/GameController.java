@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 /**
  * Java FX Controller for Game
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  */
 public class GameController implements Initializable,GameUserInterface {
 

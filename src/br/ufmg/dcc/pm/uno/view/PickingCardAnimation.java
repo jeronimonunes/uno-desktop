@@ -9,7 +9,7 @@ import javafx.scene.layout.FlowPane;
 /**
  * {@link Animation} that simulates the CPU trying to choose a {@link Card}
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  */
 public class PickingCardAnimation extends Animation<FlowPane> {

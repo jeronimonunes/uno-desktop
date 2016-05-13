@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 /**
  * Java FX Controller to start a Game
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  */
 public class StartController {
 	

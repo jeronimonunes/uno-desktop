@@ -7,7 +7,7 @@ import br.ufmg.dcc.pm.uno.model.Card.Color;
 /**
  * Builder to construct a {@link Deck}
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  */
 public class DeckBuilder {
 

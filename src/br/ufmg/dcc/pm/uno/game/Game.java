@@ -7,7 +7,7 @@ import br.ufmg.dcc.pm.uno.model.Table;
 /**
  * Interface that any Game must implement to communicate with a UI
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  */
 public interface Game extends Runnable {

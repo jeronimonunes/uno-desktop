@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 /**
  * {@link EventHandler} to decide what to do when the user clicks in a {@link Card}
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  */
 public class MouseCardEventListener implements EventHandler<MouseEvent>{

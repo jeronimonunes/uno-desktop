@@ -6,7 +6,7 @@ import br.ufmg.dcc.pm.uno.game.Game;
  * Especial type of {@link Card} that can be played any time
  * and allows the player to choose the next {@link Color}
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  */
 public class ChangeColor extends Card {

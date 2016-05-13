@@ -9,7 +9,7 @@ import br.ufmg.dcc.pm.uno.model.Card.Color;
 /**
  * A automated {@link Player} that plays by itself
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  */
 public class ArtificialPlayer extends Player {

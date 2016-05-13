@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * A {@link Deck} of a CardGame
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  */
 public class Deck {

@@ -5,7 +5,7 @@ import javafx.scene.Node;
 /**
  * {@link Animation} that make a card go up
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  * @see Animation
  *
  */

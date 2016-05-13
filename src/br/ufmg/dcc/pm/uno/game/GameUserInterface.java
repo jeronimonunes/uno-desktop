@@ -6,7 +6,7 @@ import br.ufmg.dcc.pm.uno.model.Card.Color;
 /**
  * Interface that any user of the {@link UnoGame} must implement
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  */
 public interface GameUserInterface {
 	

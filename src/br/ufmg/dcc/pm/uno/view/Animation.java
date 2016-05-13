@@ -13,7 +13,7 @@ import javafx.stage.Screen;
 /**
  * Class to represent a animation on {@link Screen}
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  * @param <T> The {@link Node} type on {@link Screen} to the {@link Animation} to occur
  */

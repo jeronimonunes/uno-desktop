@@ -8,7 +8,7 @@ import br.ufmg.dcc.pm.uno.game.UnoGame;
  * Class that represents a UNO Table
  * 
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  */
 public class Table {
 

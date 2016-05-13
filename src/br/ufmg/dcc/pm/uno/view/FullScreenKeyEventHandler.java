@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 /**
  * Event Listener that allows the game to be full screen
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  *
  */
 public class FullScreenKeyEventHandler implements EventHandler<KeyEvent>{

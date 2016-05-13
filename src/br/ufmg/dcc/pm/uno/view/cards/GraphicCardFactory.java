@@ -10,7 +10,7 @@ import javafx.scene.Group;
 /**
  * Factory responsible for constructing graphic representations of a {@link Card}
  * @author Alexandre Alphonsos Rodrigues Pereira
- * @author Jerônimo Nunes Rocha
+ * @author Jeronimo Nunes Rocha
  */
 public class GraphicCardFactory {
 	
