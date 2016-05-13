@@ -1,10 +1,10 @@
-package br.ufmg.dcc.pm.uno.controller;
+package br.ufmg.dcc.pm.uno.game;
 
 import br.ufmg.dcc.pm.uno.model.Card;
 import br.ufmg.dcc.pm.uno.model.Card.Color;
 
 /**
- * Interface that any user of the {@link GameManager} must implement
+ * Interface that any user of the {@link UnoGame} must implement
  * @author Alexandre Alphonsos Rodrigues Pereira
  * @author Jerônimo Nunes Rocha
  */

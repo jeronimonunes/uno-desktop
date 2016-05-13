@@ -7,6 +7,11 @@ import br.ufmg.dcc.pm.uno.model.Card;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 
+/**
+ * Factory responsible for constructing graphic representations of a {@link Card}
+ * @author Alexandre Alphonsos Rodrigues Pereira
+ * @author Jerônimo Nunes Rocha
+ */
 public class GraphicCardFactory {
 	
 	private static final GraphicCardFactory INSTANCE = new GraphicCardFactory();

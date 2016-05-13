@@ -1,6 +1,6 @@
 package br.ufmg.dcc.pm.uno.model;
 
-import br.ufmg.dcc.pm.uno.controller.Game;
+import br.ufmg.dcc.pm.uno.game.Game;
 
 /**
  * A {@link Card} with the effect of adding 4 cards to the hand of the next user

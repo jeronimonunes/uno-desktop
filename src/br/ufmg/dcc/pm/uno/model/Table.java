@@ -2,7 +2,7 @@ package br.ufmg.dcc.pm.uno.model;
 
 import java.util.Stack;
 
-import br.ufmg.dcc.pm.uno.controller.GameManager;
+import br.ufmg.dcc.pm.uno.game.UnoGame;
 
 /**
  * Class that represents a UNO Table
@@ -17,10 +17,10 @@ public class Table {
 	private Deck cardDeck;
 
 	private boolean spinningDirection;
-	private GameManager game;
+	private UnoGame game;
 	// true clockwise, false inverted
 	
-	public Table(GameManager game, int numberOfPlayers) {
+	public Table(UnoGame game, int numberOfPlayers) {
 
 		this.game = game;
 		this.playedCards = new Stack<Card>();
@@ -71,7 +71,7 @@ public class Table {
 		this.spinningDirection = spinningDirection;
 	}
 	
-	public GameManager getGame() {
+	public UnoGame getGame() {
 		return game;
 	}
 

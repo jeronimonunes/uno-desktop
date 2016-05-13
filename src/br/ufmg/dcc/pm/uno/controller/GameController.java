@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import br.ufmg.dcc.pm.uno.game.Game;
+import br.ufmg.dcc.pm.uno.game.GameUserInterface;
+import br.ufmg.dcc.pm.uno.game.UnoGame;
 import br.ufmg.dcc.pm.uno.model.Card;
 import br.ufmg.dcc.pm.uno.model.Card.Color;
 import br.ufmg.dcc.pm.uno.view.MouseCardEventListener;
@@ -62,7 +65,7 @@ public class GameController implements Initializable,GameUserInterface {
 		try {
 			widthProperty = new JavaBeanDoublePropertyBuilder().bean(this).name("width").build();
 			heightProperty = new JavaBeanDoublePropertyBuilder().bean(this).name("height").build();
-			this.game = new GameManager(this, 4);
+			this.game = new UnoGame(this, 4);
 			cards = Arrays.asList(new HashMap<Card,Group>(),new HashMap<Card,Group>(),new HashMap<Card,Group>(),new HashMap<Card,Group>());
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,4 +1,4 @@
-package br.ufmg.dcc.pm.uno.controller;
+package br.ufmg.dcc.pm.uno.game;
 
 import br.ufmg.dcc.pm.uno.model.Card;
 import br.ufmg.dcc.pm.uno.model.Card.Color;
@@ -6,6 +6,7 @@ import br.ufmg.dcc.pm.uno.model.Table;
 
 /**
  * Interface that any Game must implement to communicate with a UI
+ * @author Alexandre Alphonsos Rodrigues Pereira
  * @author Jerônimo Nunes Rocha
  *
  */

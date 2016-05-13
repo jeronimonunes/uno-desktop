@@ -1,4 +1,4 @@
-package br.ufmg.dcc.pm.uno.controller;
+package br.ufmg.dcc.pm.uno.game;
 
 import java.util.Collections;
 import java.util.Random;
@@ -14,9 +14,9 @@ import br.ufmg.dcc.pm.uno.model.Table;
  * @author Jerônimo Nunes Rocha
  *
  */
-public class GameManager implements Game {
+public class UnoGame implements Game {
 
-	private final static Logger LOGGER = Logger.getLogger(GameManager.class.getName());
+	private final static Logger LOGGER = Logger.getLogger(UnoGame.class.getName());
 	private static final Random RANDOM_GENERATOR = new Random();
 
 	private int currentPlayerTurn = 0;
@@ -26,7 +26,7 @@ public class GameManager implements Game {
 
 	private Color color = Color.NONE;
 
-	public GameManager(GameUserInterface client, int numberOfPlayers) {
+	public UnoGame(GameUserInterface client, int numberOfPlayers) {
 		table = new Table(this,numberOfPlayers);
 		this.client = client;
 	}

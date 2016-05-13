@@ -1,7 +1,7 @@
 package br.ufmg.dcc.pm.uno.model;
 
-import br.ufmg.dcc.pm.uno.controller.GameUserInterface;
-import br.ufmg.dcc.pm.uno.controller.GameManager;
+import br.ufmg.dcc.pm.uno.game.GameUserInterface;
+import br.ufmg.dcc.pm.uno.game.UnoGame;
 
 /**
  * A player that {@link Object#wait()} on it's turn for some {@link GameUserInterface} to make the
@@ -12,7 +12,7 @@ import br.ufmg.dcc.pm.uno.controller.GameManager;
  */
 public class ClientPlayer extends Player {
 
-	public ClientPlayer(GameManager game) {
+	public ClientPlayer(UnoGame game) {
 		super(game);
 	}
 

@@ -2,7 +2,7 @@ package br.ufmg.dcc.pm.uno.model;
 
 import java.text.MessageFormat;
 
-import br.ufmg.dcc.pm.uno.controller.Game;
+import br.ufmg.dcc.pm.uno.game.Game;
 
 /**
  * Class that represents a Card

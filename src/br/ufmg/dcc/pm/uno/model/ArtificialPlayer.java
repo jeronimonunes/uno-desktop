@@ -3,7 +3,7 @@ package br.ufmg.dcc.pm.uno.model;
 import java.util.Collections;
 import java.util.Random;
 
-import br.ufmg.dcc.pm.uno.controller.Game;
+import br.ufmg.dcc.pm.uno.game.Game;
 import br.ufmg.dcc.pm.uno.model.Card.Color;
 
 /**

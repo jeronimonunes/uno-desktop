@@ -3,7 +3,7 @@ package br.ufmg.dcc.pm.uno.model;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.ufmg.dcc.pm.uno.controller.Game;
+import br.ufmg.dcc.pm.uno.game.Game;
 
 /**
  * Class that represents a CardGame Player
