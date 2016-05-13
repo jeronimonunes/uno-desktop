@@ -1,5 +1,7 @@
 package br.ufmg.dcc.pm.uno;
 
+import br.ufmg.dcc.pm.uno.controller.GameController;
+import br.ufmg.dcc.pm.uno.controller.StartController;
 import br.ufmg.dcc.pm.uno.view.FullScreenKeyEventHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +16,7 @@ import javafx.stage.Stage;
  * @author Jeronimo Nunes Rocha
  *
  */
+@SuppressWarnings("unused")
 public class UnoDesktop extends Application {
 
 	@Override
