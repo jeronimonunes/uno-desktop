@@ -11,11 +11,14 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
-        <folder path="/uno-desktop/lib"/>
-        <javaElement handleIdentifier="=uno-desktop/src"/>
         <file path="/uno-desktop/.gitignore"/>
-        <file path="/uno-desktop/.classpath"/>
         <file path="/uno-desktop/.project"/>
+        <folder path="/uno-desktop/doc"/>
+        <folder path="/uno-desktop/lib"/>
+        <file path="/uno-desktop/uno.jardesc"/>
+        <javaElement handleIdentifier="=uno-desktop/src"/>
+        <file path="/uno-desktop/Makefile"/>
+        <file path="/uno-desktop/.classpath"/>
         <file path="/uno-desktop/new-fxml-settings.xml"/>
     </selectedElements>
 </jardesc>
