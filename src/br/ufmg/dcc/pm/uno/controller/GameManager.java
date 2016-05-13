@@ -48,9 +48,6 @@ public class GameManager implements Game {
 
 	@Override
 	public boolean play(Card card,Color color) {
-		if(!Color.NONE.equals(card.getColor())){
-			color = card.getColor();
-		}
 		if(card==null||color==null){
 			LOGGER.info("The player "+currentPlayerTurn+" has skipped his turn");
 			if(table.getCardDeck().isEmpty()) gameOver();
