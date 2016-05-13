@@ -1,0 +1,1 @@
+All libraries included here are natively included in Oracle JVM 7 or 8 but they are not included in OpenJDK, so they exists in case of the user uses OpenJDK, but are not required if they don't.
