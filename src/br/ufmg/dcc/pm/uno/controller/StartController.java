@@ -11,6 +11,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+/**
+ * Java FX Controller to start a Game
+ * @author Alexandre Alphonsos Rodrigues Pereira
+ * @author Jerônimo Nunes Rocha
+ */
 public class StartController {
 	
 	@FXML
@@ -22,11 +27,19 @@ public class StartController {
 	@FXML
 	private Button exitBtn;
 	
+	/**
+	 * Method called when exit button is pressed
+	 * @param actionEvent
+	 */
 	public void exit(ActionEvent actionEvent){
 		Stage stage = (Stage) exitBtn.getScene().getWindow();
 		stage.close();
 	}
 	
+	/**
+	 * Method called when start button is pressed
+	 * @param actionEvent
+	 */
 	public void start(ActionEvent actionEvent){
 		Stage stage = (Stage) startBtn.getScene().getWindow();
 		try {

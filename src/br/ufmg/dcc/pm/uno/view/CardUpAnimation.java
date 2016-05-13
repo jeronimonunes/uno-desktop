@@ -3,7 +3,7 @@ package br.ufmg.dcc.pm.uno.view;
 import javafx.scene.Node;
 
 /**
- * {@link Animation} that make a card go up and down
+ * {@link Animation} that make a card go up
  * @author Alexandre Alphonsos Rodrigues Pereira
  * @author Jerônimo Nunes Rocha
  * @see Animation

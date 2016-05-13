@@ -3,7 +3,7 @@ package br.ufmg.dcc.pm.uno.model;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.ufmg.dcc.pm.uno.controller.GameManager;
+import br.ufmg.dcc.pm.uno.controller.Game;
 
 /**
  * Class that represents a CardGame Player
@@ -14,17 +14,16 @@ import br.ufmg.dcc.pm.uno.controller.GameManager;
 public abstract class Player {
 
 	private List<Card> hand = new LinkedList<Card>();
-	private GameManager game;
+	private Game game;
 
-	public Player(GameManager game) {
+	public Player(Game game) {
 		this.game = game;
 	}
 
+	/**
+	 * Plays a {@link Card}
+	 */
 	public abstract void playCard();
-
-	public void notSoSecretMethod() {
-		System.out.println("I wish I was more secret =/");
-	}
 
 	public List<Card> getHand() {
 		return hand;
@@ -34,7 +33,7 @@ public abstract class Player {
 		this.hand = hand;
 	}
 
-	public GameManager getGame() {
+	public Game getGame() {
 		return game;
 	}
 	

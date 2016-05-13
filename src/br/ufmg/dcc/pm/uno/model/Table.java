@@ -7,14 +7,14 @@ import br.ufmg.dcc.pm.uno.controller.GameManager;
 /**
  * Class that represents a UNO Table
  * 
+ * @author Alexandre Alphonsos Rodrigues Pereira
  * @author Jerônimo Nunes Rocha
- *
  */
 public class Table {
 
 	private Stack<Card> playedCards;
 	private Player[] players;
-	private UnoDeck cardDeck;
+	private Deck cardDeck;
 
 	private boolean spinningDirection;
 	private GameManager game;
@@ -31,7 +31,7 @@ public class Table {
 			players[i] = new ArtificialPlayer(game);
 		}
 
-		this.cardDeck = new UnoDeck();
+		this.cardDeck = new DeckBuilder().buildUnoDeck().toDeck();
 		this.spinningDirection = true;
 	}
 
@@ -55,11 +55,11 @@ public class Table {
 		this.players = players;
 	}
 
-	public UnoDeck getCardDeck() {
+	public Deck getCardDeck() {
 		return cardDeck;
 	}
 
-	public void setCardDeck(UnoDeck cardDeck) {
+	public void setCardDeck(Deck cardDeck) {
 		this.cardDeck = cardDeck;
 	}
 

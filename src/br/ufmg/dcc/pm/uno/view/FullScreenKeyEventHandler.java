@@ -5,6 +5,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+/**
+ * Event Listener that allows the game to be full screen
+ * @author Alexandre Alphonsos Rodrigues Pereira
+ * @author Jerônimo Nunes Rocha
+ *
+ */
 public class FullScreenKeyEventHandler implements EventHandler<KeyEvent>{
 	
 	private Stage primaryStage;

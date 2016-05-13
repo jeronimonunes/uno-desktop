@@ -22,10 +22,10 @@ public class PickingCardAnimation extends Animation<FlowPane> {
 
 	@Override
 	public Double call() {
-		for(int k = 0; k < 5 && !super.isCancelled(); k++){
+		for(int k = 0; k < 2 && !super.isCancelled(); k++){
 			Node n = super.getTarget().getChildren().get(RANDOM_GENERATOR.nextInt(super.getTarget().getChildren().size()));
 			new CardAnimation(n).perform();
-			super.updateProgress(k, 5);
+			super.updateProgress(k, 2);
 		}
 		return null;
 	}

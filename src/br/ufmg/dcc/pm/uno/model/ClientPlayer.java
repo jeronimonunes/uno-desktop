@@ -1,10 +1,10 @@
 package br.ufmg.dcc.pm.uno.model;
 
-import br.ufmg.dcc.pm.uno.controller.GameClient;
+import br.ufmg.dcc.pm.uno.controller.GameUserInterface;
 import br.ufmg.dcc.pm.uno.controller.GameManager;
 
 /**
- * A player that {@link Object#wait()} on it's turn for some {@link GameClient} to make the
+ * A player that {@link Object#wait()} on it's turn for some {@link GameUserInterface} to make the
  * play for theirself and call {@link Object#notify()} on the game
  * @author Alexandre Alphonsos Rodrigues Pereira
  * @author Jerônimo Nunes Rocha

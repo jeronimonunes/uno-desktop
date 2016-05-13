@@ -2,7 +2,7 @@ package br.ufmg.dcc.pm.uno.model;
 
 import java.text.MessageFormat;
 
-import br.ufmg.dcc.pm.uno.controller.GameManager;
+import br.ufmg.dcc.pm.uno.controller.Game;
 
 /**
  * Class that represents a Card
@@ -44,7 +44,7 @@ public class Card {
 	 * Makes the needed changes in game when this card is played
 	 * @param game The game where this Card is to be applied
 	 */
-	public void effect(GameManager game){
+	public void effect(Game game){
 		game.nextPlayer();
 	}
 	
@@ -53,7 +53,7 @@ public class Card {
 	 * @param game The game running to get the last card played and the last color picked
 	 * @return true if this Card can be played, false otherwise
 	 */
-	public boolean isCompactible(GameManager game){
+	public boolean isCompactible(Game game){
 		Card card = game.getTable().getPlayedCards().peek();
 		return this.getNumber() == card.getNumber() || this.getColor().equals(game.getColor());
 	}

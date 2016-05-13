@@ -1,7 +1,13 @@
 package br.ufmg.dcc.pm.uno.model;
 
-import br.ufmg.dcc.pm.uno.controller.GameManager;
+import br.ufmg.dcc.pm.uno.controller.Game;
 
+/**
+ * A card with the effect of skipping the next player turn
+ * @author Alexandre Alphonsos Rodrigues Pereira
+ * @author Jerônimo Nunes Rocha
+ *
+ */
 public class SkipCard extends Card {
 
 	public SkipCard(Color color) {
@@ -9,7 +15,7 @@ public class SkipCard extends Card {
 	}
 	
 	@Override
-	public void effect(GameManager game) {
+	public void effect(Game game) {
 		super.effect(game);
 		super.effect(game);
 	}

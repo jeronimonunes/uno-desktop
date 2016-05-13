@@ -4,7 +4,7 @@ import javafx.application.Platform;
 import javafx.scene.Node;
 
 /**
- * {@link Animation} that make a card go up and down
+ * {@link Animation} that make a card go down
  * @author Alexandre Alphonsos Rodrigues Pereira
  * @author Jerônimo Nunes Rocha
  * @see Animation

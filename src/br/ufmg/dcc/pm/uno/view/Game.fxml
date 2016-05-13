@@ -13,9 +13,6 @@
 
 <BorderPane fx:id="page" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="br.ufmg.dcc.pm.uno.controller.GameController">
-	<stylesheets>
-		<URL value="@Game.css"/>
-	</stylesheets>
 	<bottom>
 		<BorderPane>
 			<center>

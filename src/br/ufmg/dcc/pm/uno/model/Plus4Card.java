@@ -1,7 +1,13 @@
 package br.ufmg.dcc.pm.uno.model;
 
-import br.ufmg.dcc.pm.uno.controller.GameManager;
+import br.ufmg.dcc.pm.uno.controller.Game;
 
+/**
+ * A {@link Card} with the effect of adding 4 cards to the hand of the next user
+ * @author Alexandre Alphonsos Rodrigues Pereira
+ * @author Jerônimo Nunes Rocha
+ *
+ */
 public class Plus4Card extends Card {
 
 	public Plus4Card() {
@@ -9,7 +15,7 @@ public class Plus4Card extends Card {
 	}
 	
 	@Override
-	public void effect(GameManager game) {
+	public void effect(Game game) {
 		super.effect(game);
 		game.drawCard();
 		game.drawCard();
@@ -18,7 +24,7 @@ public class Plus4Card extends Card {
 	}
 	
 	@Override
-	public boolean isCompactible(GameManager game) {
+	public boolean isCompactible(Game game) {
 		return true;
 	}
 

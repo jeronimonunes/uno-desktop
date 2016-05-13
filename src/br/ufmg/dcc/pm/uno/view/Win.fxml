@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
+
+<StackPane id="page" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color:#ff5555;">
+	<Text StackPane.alignment="CENTER" text="Você venceu!!!" style="-fx-font: 50px Tahoma;-fx-fill:white;"/>
+</StackPane>

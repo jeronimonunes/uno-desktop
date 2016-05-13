@@ -1,6 +1,6 @@
 package br.ufmg.dcc.pm.uno.model;
 
-import br.ufmg.dcc.pm.uno.controller.GameManager;
+import br.ufmg.dcc.pm.uno.controller.Game;
 
 /**
  * Especial type of {@link Card} that can be played any time
@@ -16,13 +16,13 @@ public class ChangeColor extends Card {
 	}
 	
 	@Override
-	public void effect(GameManager game) {
+	public void effect(Game game) {
 		super.effect(game);
 		//TODO ask for color
 	}
 	
 	@Override
-	public boolean isCompactible(GameManager game) {
+	public boolean isCompactible(Game game) {
 		return true;
 	}
 
