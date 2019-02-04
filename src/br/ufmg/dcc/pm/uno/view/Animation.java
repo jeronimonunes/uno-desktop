@@ -82,6 +82,7 @@ public abstract class Animation<T extends Node> extends Task<Double> {
 	 * @since JavaFX 8.0
 	 */
 	protected void updateValue(Double value) {
+		super.updateValue(value);
 		if (Platform.isFxApplicationThread()) {
 			this.value.set(value);
 		} else {
@@ -90,12 +91,7 @@ public abstract class Animation<T extends Node> extends Task<Double> {
 			// to throttle the updates so as not to completely clobber
 			// the event dispatching system.
 			if (valueUpdate.getAndSet(value) == null) {
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						Animation.this.value.set(valueUpdate.getAndSet(null));
-					}
-				});
+				Platform.runLater(() -> Animation.this.value.set(valueUpdate.getAndSet(null)));
 			}
 		}
 	}

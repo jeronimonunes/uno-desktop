@@ -39,12 +39,7 @@ public class CardDownAnimation extends Animation<Node> {
 		if(Platform.isFxApplicationThread()){
 			CardDownAnimation.super.getTarget().translateYProperty().unbind();
 		} else {
-			Platform.runLater(new Runnable(){
-				@Override
-				public void run() {
-					CardDownAnimation.super.getTarget().translateYProperty().unbind();
-				}
-			});
+			Platform.runLater( ()->CardDownAnimation.super.getTarget().translateYProperty().unbind() );
 		}
 		return null;
 	}

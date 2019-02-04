@@ -40,12 +40,7 @@ public class CardAnimation extends Animation<Node> {
 					e.printStackTrace();
 				}
 			}
-			Platform.runLater(new Runnable(){
-				@Override
-				public void run() {
-					CardAnimation.super.getTarget().translateYProperty().unbind();
-				}
-			});
+			Platform.runLater( ()->CardAnimation.super.getTarget().translateYProperty().unbind() );
 		}
 		return null;
 	}

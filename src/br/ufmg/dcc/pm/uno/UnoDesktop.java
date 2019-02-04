@@ -6,6 +6,7 @@ import br.ufmg.dcc.pm.uno.view.FullScreenKeyEventHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -27,12 +28,15 @@ public class UnoDesktop extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(true);
 			primaryStage.show();
-			primaryStage.addEventFilter(KeyEvent.KEY_PRESSED, new FullScreenKeyEventHandler(primaryStage));
+			primaryStage.addEventFilter(KeyEvent.KEY_PRESSED, (event) -> {
+				if (event.getCode() == KeyCode.F11) {
+				primaryStage.setFullScreen(!primaryStage.isFullScreen());
+			}});
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}

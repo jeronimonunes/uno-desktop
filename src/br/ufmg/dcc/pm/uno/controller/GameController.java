@@ -56,7 +56,7 @@ public class GameController implements Initializable,GameUserInterface {
 	private DoubleProperty heightProperty;
 
 	private boolean userTurn = true;
-	
+
 	private boolean cardDrown = false;
 
 	private Game game;
@@ -130,15 +130,12 @@ public class GameController implements Initializable,GameUserInterface {
 	 * @param card
 	 */
 	private void addCardToStack(final Group card){
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				card.translateXProperty().unbind();
-				card.setTranslateX(RANDOM_GENERATOR.nextInt(96)-48);
-				card.translateYProperty().unbind();
-				card.setTranslateY(RANDOM_GENERATOR.nextInt(144)-72);
-				stack.getChildren().add(card);
-			}
+		Platform.runLater(() -> {
+			card.translateXProperty().unbind();
+			card.setTranslateX(RANDOM_GENERATOR.nextInt(96)-48);
+			card.translateYProperty().unbind();
+			card.setTranslateY(RANDOM_GENERATOR.nextInt(144)-72);
+			stack.getChildren().add(card);
 		});
 	}
 
@@ -155,59 +152,50 @@ public class GameController implements Initializable,GameUserInterface {
 
 	@Override
 	public void userBuysCard(final int i, final Card c) {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				FlowPane ui = getPlayers().get(i);
-				Group card = null;
-				if(i==0) card = GraphicCardFactory.getInstance().buildGrahics(c);
-				else card = GraphicCardFactory.getInstance().buildGrahics(Color.NONE,0);
-				cards.get(i).put(c, card);
-				card.setTranslateY(72);
-				ui.getChildren().add(card);
-				updateHandWidth(ui,i%2==0?getWidth():getHeight());
-				if(i==0){
-					EventHandler<MouseEvent> mouseEvent = new MouseCardEventListener(GameController.this,c);
-					card.setOnMouseEntered(mouseEvent);
-					card.setOnMouseExited(mouseEvent);
-					card.setOnMouseClicked(mouseEvent);
-				}
+		Platform.runLater(() -> {
+			FlowPane ui = getPlayers().get(i);
+			Group card = null;
+			if(i==0) card = GraphicCardFactory.getInstance().buildGrahics(c);
+			else card = GraphicCardFactory.getInstance().buildGrahics(Color.NONE,0);
+			cards.get(i).put(c, card);
+			card.setTranslateY(72);
+			ui.getChildren().add(card);
+			updateHandWidth(ui,i%2==0?getWidth():getHeight());
+			if(i==0){
+				EventHandler<MouseEvent> mouseEvent = new MouseCardEventListener(GameController.this,c);
+				card.setOnMouseEntered(mouseEvent);
+				card.setOnMouseExited(mouseEvent);
+				card.setOnMouseClicked(mouseEvent);
 			}
 		});
 	}
 
 	@Override
 	public void cleanStack() {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				List<Node> cards = getStack().getChildren();
-				Node card = cards.get(cards.size()-1);
-				cards.clear();
-				cards.add(card);
-			}
+		Platform.runLater(() -> {
+			List<Node> cards = getStack().getChildren();
+			Node card = cards.get(cards.size()-1);
+			cards.clear();
+			cards.add(card);
 		});
 	}
 
 	@Override
 	public void gameOver(final int win) {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				Stage stage = (Stage) page.getScene().getWindow();
-				Pane root = null;
-				try {
-					if(win==0){
-						root = (Pane)FXMLLoader.load(getClass().getResource("/br/ufmg/dcc/pm/uno/view/Win.fxml"));
-					} else {
-						root = (Pane)FXMLLoader.load(getClass().getResource("/br/ufmg/dcc/pm/uno/view/Lost.fxml"));
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
+		Platform.runLater(() -> {
+			Stage stage = (Stage) page.getScene().getWindow();
+			Pane root = null;
+			try {
+				if(win==0){
+					root = (Pane)FXMLLoader.load(getClass().getResource("/br/ufmg/dcc/pm/uno/view/Win.fxml"));
+				} else {
+					root = (Pane)FXMLLoader.load(getClass().getResource("/br/ufmg/dcc/pm/uno/view/Lost.fxml"));
 				}
-				Scene scene = new Scene(root,page.getWidth(),page.getHeight());
-				stage.setScene(scene);
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+			Scene scene = new Scene(root,page.getWidth(),page.getHeight());
+			stage.setScene(scene);
 		});
 	}
 
@@ -314,25 +302,22 @@ public class GameController implements Initializable,GameUserInterface {
 
 	@Override
 	public void changeColor(final Color color) {
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				switch(color){
-				case RED:
-					page.setStyle("-fx-background-color:#ff5555;");
-					break;
-				case GREEN:
-					page.setStyle("-fx-background-color:#55aa55;");
-					break;
-				case BLUE:
-					page.setStyle("-fx-background-color:#5555ff;");
-					break;
-				case YELLOW:
-					page.setStyle("-fx-background-color:#ffaa00;");
-					break;
-				case NONE:
-					page.setStyle("-fx-background-color:#000000;");
-				}
+		Platform.runLater(() -> {
+			switch(color){
+			case RED:
+				page.setStyle("-fx-background-color:#ff5555;");
+				break;
+			case GREEN:
+				page.setStyle("-fx-background-color:#55aa55;");
+				break;
+			case BLUE:
+				page.setStyle("-fx-background-color:#5555ff;");
+				break;
+			case YELLOW:
+				page.setStyle("-fx-background-color:#ffaa00;");
+				break;
+			case NONE:
+				page.setStyle("-fx-background-color:#000000;");
 			}
 		});
 	}
